@@ -1,64 +1,75 @@
 <script>
-  import { onMount } from "svelte";
-
-  let isOpen = false;
-  let isMobile = false;
-
-  function toggleMenu() {
-    isOpen = !isOpen;
-  }
-
-  onMount(() => {
-    const checkWidth = () => {
-      isMobile = window.innerWidth < 768;
-      isOpen = false; // Default closed on mobile
-    };
-
-    checkWidth();
-    window.addEventListener("resize", checkWidth);
-
-    return () => {
-      window.removeEventListener("resize", checkWidth);
-    };
-  });
+  import { Moon, Github, Linkedin } from "lucide-svelte";
+  import ThemeToggle from "./ThemeToggle.svelte";
 </script>
 
-<nav class="bg-gray-800 text-white w-full">
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="flex justify-between h-16 items-center">
-      <h1 class="text-xl font-bold">Waleed</h1>
+<header class="border-b border-neutral-200">
+  <nav
+    class="flex items-center justify-between px-4 h-24 max-w-[1800px] mx-auto"
+  >
+    <!-- Left - Logo & Text -->
+    <a
+      href="/"
+      class="group flex items-center gap-4 p-2 rounded-lg hover:bg-neutral-100 transition-colors"
+    >
+      <div class="group-hover:bg-neutral-900">Waleed</div>
+    </a>
 
-      <button class="md:hidden text-2xl" on:click={toggleMenu}>
-        {isOpen ? "✕" : "☰"}
-      </button>
-
-      <ul class="hidden md:flex space-x-8">
-        <li><a href="/" class="hover:text-gray-300">Home</a></li>
-        <li><a href="/projects" class="hover:text-gray-300">Projects</a></li>
-        <li><a href="/blog" class="hover:text-gray-300">Blog</a></li>
-        <li><a href="/about" class="hover:text-gray-300">About</a></li>
-      </ul>
-    </div>
-
-    {#if isOpen}
-      <div class="md:hidden">
-        <ul class="py-2 space-y-2">
+    <!-- Right - Social & Contact -->
+    <div class="flex items-center gap-6">
+      <!-- Center - Navigation -->
+      <ul class="flex gap-8 font-serif">
+        {#each ["ABOUT", "WORK", "CONTACT"] as item}
           <li>
-            <a href="/" class="block hover:bg-gray-700 px-4 py-2">Home</a>
-          </li>
-          <li>
-            <a href="/projects" class="block hover:bg-gray-700 px-4 py-2"
-              >Projects</a
+            <a
+              href="/{item.toLowerCase()}"
+              class="block p-2 rounded-lg hover:bg-neutral-100 transition-colors"
             >
+              {item}
+            </a>
           </li>
-          <li>
-            <a href="/blog" class="block hover:bg-gray-700 px-4 py-2">Blog</a>
-          </li>
-          <li>
-            <a href="/about" class="block hover:bg-gray-700 px-4 py-2">About</a>
-          </li>
-        </ul>
+        {/each}
+      </ul>
+
+      <!-- Social Icons -->
+      <div class="flex items-center h-24">
+        <div class="flex flex-col h-24 w-12">
+          <a
+            href="https://github.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center justify-center h-full p-2 hover:bg-accent transition-all duration-200"
+          >
+            <Github class="w-5 h-5" />
+          </a>
+          <a
+            href="https://linkedin.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center justify-center h-full p-2 hover:bg-accent transition-all duration-200"
+          >
+            <Linkedin class="w-5 h-5" />
+          </a>
+        </div>
+
+        <ThemeToggle class="" />
       </div>
-    {/if}
-  </div>
-</nav>
+
+      <!-- Contact Info -->
+      <div class="group p-2 rounded-lg hover:bg-neutral-100 transition-colors">
+        <div class="text-right">
+          <p class="font-serif">Coding globally from Qatar.</p>
+          <p class="text-sm">
+            Available for freelance work →
+            <a
+              href="/contact"
+              class="font-medium group-hover:text-neutral-700 transition-colors"
+            >
+              Hire me
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
