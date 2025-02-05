@@ -21,17 +21,17 @@ const PuzzlePieces = () => {
   const [assembled, setAssembled] = useState(false);
   const [completed, setCompleted] = useState(false);
 
+  // Trigger complete animation 1 second after initial render.
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 200 && !assembled) {
-        setPieces(pieces.map(piece => ({ ...piece, x: 0, y: 0, rotation: 0 })));
-        setAssembled(true);
-        setCompleted(true);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [assembled, pieces]);
+    const timer = setTimeout(() => {
+      setPieces(prevPieces =>
+        prevPieces.map(piece => ({ ...piece, x: 0, y: 0, rotation: 0 }))
+      );
+      setAssembled(true);
+      setCompleted(true);
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const isComplete = pieces.every(isPieceCorrect);
@@ -74,7 +74,7 @@ const PuzzlePieces = () => {
       rotation: 0
     })));
     setCompleted(true);
-    setAssembled(false);
+    setAssembled(true);
   };
 
   const colors = {
