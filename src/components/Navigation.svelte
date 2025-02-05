@@ -23,7 +23,7 @@
           <li>
             <a
               href="/{item.toLowerCase()}"
-              class="block p-2 rounded-lg hover:bg-neutral-100 transition-colors"
+              class="group flex items-center gap-2 p-2 rounded-lg hover:bg-accent transition-colors"
             >
               {item}
             </a>

@@ -1,5 +1,7 @@
 ---
 import Navigation from "../components/Navigation.svelte";
+import { ViewTransitions } from "astro:transitions";
+
 const { title } = Astro.props;
 ---
 
@@ -7,6 +9,7 @@ const { title } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <ViewTransitions />
     <title>{title} | Waleed</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>

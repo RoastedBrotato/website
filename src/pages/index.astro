@@ -1,8 +1,13 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import PuzzlePieces from "../components/Puzzle.jsx";
 ---
 
 <Layout title="Home">
+  <div class="hero-section">
+    <PuzzlePieces client:only="react" />
+  </div>
+
   <div class="max-w-4xl mx-auto">
     <h1 class="text-4xl font-bold mb-4">Welcome to My Portfolio</h1>
     <p class="text-xl mb-6">
