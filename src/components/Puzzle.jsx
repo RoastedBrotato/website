@@ -131,27 +131,17 @@ const PuzzlePieces = () => {
                   const newX = piece.x + info.offset.x;
                   const newY = piece.y + info.offset.y;
                   const snapThreshold = 5;
-                  // rotation remains unchanged during drag.
-                  const newRotation = piece.rotation; 
-                  if (
-                    Math.abs(newX) < snapThreshold &&
-                    Math.abs(newY) < snapThreshold &&
-                    Math.abs(newRotation % 360) < snapThreshold
-                  ) {
-                    // Snap piece into place.
+                  // Instead of checking rotation, we now snap x, y and always set rotation to 0
+                  if (Math.abs(newX) < snapThreshold && Math.abs(newY) < snapThreshold) {
                     setPieces(prev =>
                       prev.map(p =>
-                        p.id === piece.id
-                          ? { ...p, x: 0, y: 0, rotation: 0 }
-                          : p
+                        p.id === piece.id ? { ...p, x: 0, y: 0, rotation: 0 } : p
                       )
                     );
                   } else {
                     setPieces(prev =>
                       prev.map(p =>
-                        p.id === piece.id
-                          ? { ...p, x: newX, y: newY }
-                          : p
+                        p.id === piece.id ? { ...p, x: newX, y: newY } : p
                       )
                     );
                   }
