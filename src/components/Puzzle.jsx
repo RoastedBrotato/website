@@ -6,9 +6,10 @@ const getRandomRotation = () => Math.floor(Math.random() * 4) * 90;
 const getRandomOffset = (max = 100) => (Math.random() * 2 - 1) * max;
 
 const isClose = (a, b, margin = 5) => Math.abs(a - b) <= margin;
-const isPieceCorrect = (piece) => {
-  return isClose(piece.x, 0) && isClose(piece.y, 0) && isClose(piece.rotation % 360, 0);
-};
+const isPieceCorrect = (piece) =>
+  isClose(piece.x, 0, 5) &&
+  isClose(piece.y, 0, 5) &&
+  isClose(piece.rotation % 360, 0, 5);
 
 const PuzzlePieces = () => {
   const [pieces, setPieces] = useState([
@@ -19,8 +20,10 @@ const PuzzlePieces = () => {
   ]);
   const [assembled, setAssembled] = useState(false);
   const [completed, setCompleted] = useState(false);
+  // New state to track if auto-completion occurred.
+  const [autoCompleted, setAutoCompleted] = useState(false);
 
-  // Trigger complete animation 1 second after initial render.
+  // Automatically complete the puzzle 1 second after render (without showing congratulations message).
   useEffect(() => {
     const timer = setTimeout(() => {
       setPieces(prevPieces =>
@@ -28,6 +31,7 @@ const PuzzlePieces = () => {
       );
       setAssembled(true);
       setCompleted(true);
+      setAutoCompleted(true);
     }, 1000);
     return () => clearTimeout(timer);
   }, []);
@@ -36,17 +40,15 @@ const PuzzlePieces = () => {
     const isComplete = pieces.every(isPieceCorrect);
     if (isComplete && !completed) {
       setCompleted(true);
+      setAssembled(true);
     } else if (!isComplete && completed) {
       setCompleted(false);
     }
   }, [pieces, completed]);
 
-  // Rotate without modifying x and y.
   const handleRotate = (id) => {
-    setPieces(pieces.map(piece => 
-      piece.id === id 
-        ? { ...piece, rotation: piece.rotation + 90 }
-        : piece
+    setPieces(pieces.map(piece =>
+      piece.id === id ? { ...piece, rotation: piece.rotation + 90 } : piece
     ));
   };
 
@@ -59,6 +61,7 @@ const PuzzlePieces = () => {
     })));
     setCompleted(false);
     setAssembled(false);
+    setAutoCompleted(false);
   };
 
   const handleComplete = () => {
@@ -70,6 +73,7 @@ const PuzzlePieces = () => {
     })));
     setCompleted(true);
     setAssembled(true);
+    // When user manually completes, autoCompleted remains false.
   };
 
   const colors = {
@@ -104,8 +108,8 @@ const PuzzlePieces = () => {
           Complete
         </button>
       </div>
-      
-      <div className="border border-black">
+
+      <div className="border border-black relative">
         <svg 
           viewBox="0 0 471 470" 
           xmlns="http://www.w3.org/2000/svg" 
@@ -127,14 +131,13 @@ const PuzzlePieces = () => {
                   if (!assembled) handleRotate(piece.id);
                 }}
                 onDragEnd={(e, info) => {
-                  // Calculate new positions based on drag offset.
+                  // Increase the snap threshold area to 20 pixels.
                   const newX = piece.x + info.offset.x;
                   const newY = piece.y + info.offset.y;
-                  const snapThreshold = 5;
-                  // Instead of checking rotation, we now snap x, y and always set rotation to 0
+                  const snapThreshold = 20;
                   if (Math.abs(newX) < snapThreshold && Math.abs(newY) < snapThreshold) {
                     setPieces(prev =>
-                      prev.map(p =>
+                      prev.map(p => 
                         p.id === piece.id ? { ...p, x: 0, y: 0, rotation: 0 } : p
                       )
                     );
@@ -159,6 +162,21 @@ const PuzzlePieces = () => {
             );
           })}
         </svg>
+        {!assembled && (
+        <div className="absolute top-0 right-0 bg-white p-2 text-sm">
+          • Drag pieces to move them
+          <br />
+          • Double-click to rotate 90°
+        </div>
+      )}
+
+            
+      {/* Optional: Display congratulations if puzzle completed */}
+      {completed && !autoCompleted && (
+          <div className="absolute top-0 left-0 bg-green-500 text-white p-2 rounded-br-lg shadow-lg animate-bounce">
+          🎉 Puzzle Completed!
+        </div>
+      )}
       </div>
     </div>
   );
