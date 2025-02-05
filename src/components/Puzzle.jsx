@@ -55,8 +55,8 @@ const PuzzlePieces = () => {
   const handleShuffle = () => {
     setPieces(pieces.map(piece => ({
       ...piece,
-      x: getRandomOffset(),
-      y: getRandomOffset(),
+      x: getRandomOffset(150), // increased scatter distance
+      y: getRandomOffset(150),
       rotation: getRandomRotation()
     })));
     setCompleted(false);
@@ -109,7 +109,7 @@ const PuzzlePieces = () => {
         </button>
       </div>
 
-      <div className="border border-black relative">
+      <div className="relative">
         <svg 
           viewBox="0 0 471 470" 
           xmlns="http://www.w3.org/2000/svg" 
