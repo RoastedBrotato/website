@@ -4,19 +4,16 @@ import PuzzlePieces from "../components/Puzzle.jsx";
 ---
 
 <Layout title="Home">
-  <div class="hero-section flex justify-between items-center pt-24">
+  <div class="hero-section flex justify-around items-center mx-auto">
     <div class="hero-text max-w-xl">
-      <h1 class="text-4xl font-bold mb-4">Welcome to My Portfolio</h1>
+      <h1 class="text-4xl font-bold mb-4">
+        A self proclaimed creative developer
+      </h1>
       <p class="text-xl mb-6">
-        Hi, I'm Waleed! I'm a creative full-stack developer passionate about
-        building innovative solutions.
+        I work on cool things, or whatever helps me sustain myself to make cool
+        things! I like to explore creative projects and experiment with new
+        technologies. I design stuff to make it accessible, responsive and fast!
       </p>
-      <a
-        href="/projects"
-        class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300"
-      >
-        View My Projects
-      </a>
     </div>
     <div class="hero-puzzle w-1/2 lg:max-w-md">
       <PuzzlePieces client:only="react" />
