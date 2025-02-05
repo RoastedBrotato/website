@@ -6,7 +6,6 @@ const getRandomRotation = () => Math.floor(Math.random() * 4) * 90;
 const getRandomOffset = (max = 100) => (Math.random() * 2 - 1) * max;
 
 const isClose = (a, b, margin = 5) => Math.abs(a - b) <= margin;
-
 const isPieceCorrect = (piece) => {
   return isClose(piece.x, 0) && isClose(piece.y, 0) && isClose(piece.rotation % 360, 0);
 };
@@ -42,15 +41,11 @@ const PuzzlePieces = () => {
     }
   }, [pieces, completed]);
 
-  const handleRotate = (id, currentX, currentY) => {
+  // Rotate without modifying x and y.
+  const handleRotate = (id) => {
     setPieces(pieces.map(piece => 
       piece.id === id 
-        ? { 
-            ...piece, 
-            rotation: piece.rotation + 90,
-            x: currentX,
-            y: currentY
-          }
+        ? { ...piece, rotation: piece.rotation + 90 }
         : piece
     ));
   };
@@ -92,9 +87,8 @@ const PuzzlePieces = () => {
   };
 
   return (
-    <div className="relative mx-auto" style={{ width: "471px", height: "470px" }}>
-      {/* Control buttons */}
-      <div className="absolute -top-12 left-0 flex gap-2">
+    <div className="puzzle-container">
+      <div className="controls flex gap-4 mb-4">
         <button 
           onClick={handleShuffle}
           className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
@@ -110,7 +104,7 @@ const PuzzlePieces = () => {
           Complete
         </button>
       </div>
-
+      
       <div className="border border-black">
         <svg 
           viewBox="0 0 471 470" 
@@ -120,18 +114,17 @@ const PuzzlePieces = () => {
         >
           {Object.keys(paths).map(key => {
             const piece = pieces.find(p => p.id === +key);
-            
             return (
               <motion.g
                 key={key}
                 drag={!assembled}
                 dragConstraints={{ left: -100, right: 100, top: -100, bottom: 100 }}
-                style={{ originX: "50%", originY: "50%" }}
+                style={{ originX: 0.5, originY: 0.5 }}
                 animate={{ x: piece.x, y: piece.y, rotate: piece.rotation }}
                 transition={{ type: "spring", stiffness: 100, damping: 20 }}
                 onDoubleClick={(e) => {
                   e.stopPropagation();
-                  if (!assembled) handleRotate(piece.id, piece.x, piece.y);
+                  if (!assembled) handleRotate(piece.id);
                 }}
                 className="cursor-move"
               >
@@ -147,19 +140,6 @@ const PuzzlePieces = () => {
           })}
         </svg>
       </div>
-      
-      {!assembled && (
-        <div className="absolute top-0 right-0 bg-white p-2 text-sm">
-          • Drag pieces to move them
-          <br />
-          • Double-click to rotate 90°
-        </div>
-      )}
-      {completed && !assembled && (
-        <div className="absolute top-0 left-0 bg-green-500 text-white p-2 rounded-br-lg shadow-lg animate-bounce">
-          🎉 Puzzle Completed!
-        </div>
-      )}
     </div>
   );
 };
