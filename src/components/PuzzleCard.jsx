@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 const PuzzleCard = ({
   position = "middle", // Default to middle
   className = "",
+  
   children,
   ...props
 }) => {
@@ -36,7 +37,7 @@ const PuzzleCard = ({
     `,
     right: `
       rounded-2xl ml-8
-      before:bg-[#4A1818] before:rounded-full
+      before:bg-light dark:before:bg-dark before:rounded-full
       before:top-1/2 before:-translate-y-1/2
       before:left-0 before:-translate-x-1/2
     `,

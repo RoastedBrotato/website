@@ -32,21 +32,16 @@ import Card from "../components/PuzzleCard.jsx";
       </Card>
     </div>
 
-    <div style={{ display: "flex", flexDirection: "column" }}>
+    <div class="flex flex-col justify-center items-center">
       <Card position="top">Top Card</Card>
-      <div style={{ display: "flex" }}>
-        <Card position="left">Left Card</Card>
-        <Card
-          position="middle"
-          hasLeftNeighbor
-          hasRightNeighbor
-          hasTopNeighbor
-          hasBottomNeighbor>Middle Card</Card
-        >
-        <Card position="right">Right Card</Card>
-      </div>
       <Card position="bottom">Bottom Card</Card>
     </div>
+
+    <div class="flex justify-between">
+      <Card position="left">Left Card</Card>
+      <Card position="right">Right Card</Card>
+    </div>
+
     <div class="hero-puzzle w-1/2 lg:max-w-md">
       <PuzzlePieces client:only="react" />
     </div>
