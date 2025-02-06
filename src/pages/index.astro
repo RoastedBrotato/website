@@ -1,19 +1,35 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import PuzzlePieces from "../components/Puzzle.jsx";
+import Card from "../components/PuzzleCard.jsx";
 ---
 
 <Layout title="Home">
   <div class="hero-section flex justify-around items-center mx-auto">
     <div class="hero-text max-w-xl">
-      <h1 class="text-4xl font-bold mb-4">
-        A self proclaimed creative developer
-      </h1>
-      <p class="text-xl mb-6">
-        I work on cool things, or whatever helps me sustain myself to make cool
-        things! I like to explore creative projects and experiment with new
-        technologies. I design stuff to make it accessible, responsive and fast!
-      </p>
+      <Card position={"top"}>
+        <h1 class="text-4xl font-bold mb-4">
+          A self proclaimed creative developer
+        </h1>
+
+        <p class="text-xl mb-6">
+          I craft digital experiences that are fast, accessible, and visually
+          striking. I like to explore creative projects and play around with new
+          technologies.
+        </p>
+      </Card>
+
+      <Card position={"bottom"}>
+        <h1 class="text-4xl font-bold mb-4">
+          A self proclaimed creative developer
+        </h1>
+
+        <p class="text-xl mb-6">
+          I craft digital experiences that are fast, accessible, and visually
+          striking. I like to explore creative projects and play around with new
+          technologies.
+        </p>
+      </Card>
     </div>
     <div class="hero-puzzle w-1/2 lg:max-w-md">
       <PuzzlePieces client:only="react" />

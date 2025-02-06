@@ -109,7 +109,7 @@ const PuzzlePieces = () => {
         </button>
       </div>
 
-      <div className="relative">
+      <div className="border border-black relative">
         <svg 
           viewBox="0 0 471 470" 
           xmlns="http://www.w3.org/2000/svg" 
@@ -162,7 +162,7 @@ const PuzzlePieces = () => {
             );
           })}
         </svg>
-        {!assembled && (
+        {!assembled && !autoCompleted && (
         <div className="absolute top-0 right-0 bg-white p-2 text-sm">
           • Drag pieces to move them
           <br />
